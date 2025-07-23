@@ -37,7 +37,7 @@ export default function Register() {
       return;
     }
     axios
-      .post("http://localhost:3000/register", userData)
+      .post(`${import.meta.env.VITE_API_URL}/register`, userData)
       .then((res) => {
         console.log(res.data);
         navigate("/dashboard");

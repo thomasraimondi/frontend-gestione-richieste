@@ -19,7 +19,7 @@ export default function AddRequests() {
   });
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/requests", formData).then((res: any) => {
+    axios.post(`${import.meta.env.VITE_API_URL}/requests`, formData).then((res: any) => {
       navigate("/dashboard");
     });
   };

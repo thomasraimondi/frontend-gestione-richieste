@@ -22,7 +22,7 @@ export default function DashboardCrew() {
   const [requests, setRequests] = useState<Request[]>([]);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`http://localhost:3000/requests/user`).then((res) => {
+    axios.get(`${import.meta.env.VITE_API_URL}/requests/user`).then((res) => {
       setRequests(res.data);
     });
   }, []);

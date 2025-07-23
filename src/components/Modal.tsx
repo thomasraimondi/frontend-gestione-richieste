@@ -20,7 +20,7 @@ export default function Modal() {
   };
 
   const handleLogout = () => {
-    axios.get("http://localhost:3000/logout", { withCredentials: true }).then((res) => {
+    axios.get(`${import.meta.env.VITE_API_URL}/logout`, { withCredentials: true }).then((res) => {
       logout();
       console.log(res);
       handleClose();

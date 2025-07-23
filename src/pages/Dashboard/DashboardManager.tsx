@@ -18,7 +18,7 @@ interface Request {
 export default function DashboardManager() {
   const [requests, setRequests] = useState<Request[]>([]);
   useEffect(() => {
-    axios.get(`http://localhost:3000/requests/manager`).then((res) => {
+    axios.get(`${import.meta.env.VITE_API_URL}/requests/manager`).then((res) => {
       setRequests(res.data);
     });
   }, []);

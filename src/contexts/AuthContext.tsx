@@ -39,9 +39,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const checkAuth = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:3000/check-token");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/check-token`);
       setUser(res.data.user);
-      console.log(res.data);
     } catch (err) {
       setUser(null);
       navigate("/");
@@ -57,7 +56,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // 🔑 Login
   const login = async (username: string, password: string) => {
     try {
-      await axios.post("http://localhost:3000/login", { username, password });
+      await axios.post(`${import.meta.env.VITE_API_URL}/login`, { username, password });
       await checkAuth();
       navigate("/dashboard");
     } catch (err: any) {
@@ -77,7 +76,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // 🚪 Logou
   const logout = async () => {
     try {
-      await axios.get("http://localhost:3000/logout");
+      await axios.get(`${import.meta.env.VITE_API_URL}/logout`);
       setUser(null);
       navigate("/");
       window.location.reload();

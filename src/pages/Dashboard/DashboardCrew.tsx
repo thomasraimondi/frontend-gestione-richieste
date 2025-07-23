@@ -22,7 +22,7 @@ export default function DashboardCrew() {
   const [searchType, setSearchType] = useState("");
   const [searchLastname, setSearchLastname] = useState("");
   useEffect(() => {
-    axios.get(`http://localhost:3000/requests/crew`).then((res) => {
+    axios.get(`${import.meta.env.VITE_API_URL}/requests/crew`).then((res) => {
       setRequests(res.data);
     });
   }, []);

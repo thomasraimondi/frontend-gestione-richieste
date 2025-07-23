@@ -30,7 +30,7 @@ export default function DetailRequest({ id, setOpen }: { id: number; setOpen: (o
   const [request, setRequest] = useState<Request | null>(null);
   useEffect(() => {
     if (id) {
-      axios.get(`http://localhost:3000/requests/${id}`).then((res) => {
+      axios.get(`${import.meta.env.VITE_API_URL}/requests/${id}`).then((res) => {
         setRequest(res.data[0]);
         console.log(res.data[0]);
       });
@@ -39,7 +39,7 @@ export default function DetailRequest({ id, setOpen }: { id: number; setOpen: (o
 
   const handleApprove = () => {
     axios
-      .patch("http://localhost:3000/requests/update", { id, status: "approved" })
+      .patch(`${import.meta.env.VITE_API_URL}/requests/update`, { id, status: "approved" })
       .then((res) => {
         console.log(res.data);
         setOpen(false);
@@ -51,7 +51,7 @@ export default function DetailRequest({ id, setOpen }: { id: number; setOpen: (o
   };
   const handleReject = () => {
     axios
-      .patch("http://localhost:3000/requests/update", { id, status: "rejected" })
+      .patch(`${import.meta.env.VITE_API_URL}/requests/update`, { id, status: "rejected" })
       .then((res) => {
         console.log(res.data);
         setOpen(false);
