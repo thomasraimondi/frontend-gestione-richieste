@@ -23,7 +23,7 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const { user } = useAuth();
 
-  const pages = [{ id: 1, name: "Home", path: "/" }, user ? { id: 2, name: "Dashboard", path: "/dashboard" } : null];
+  const pages = [user ? { id: 2, name: "Dashboard", path: "/dashboard" } : { id: 1, name: "Home", path: "/" }];
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -48,7 +48,7 @@ function ResponsiveAppBar() {
     <AppBar position="fixed" sx={{ backgroundColor: "#114412", top: 0, left: 0, right: 0, zIndex: 1000, height: "70px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Link to="/" className="hidden lg:block">
+          <Link to={user ? "/dashboard" : "/"} className="hidden lg:block">
             <img src="/logo.png" alt="logo" className="w-10 h-10" />
           </Link>
 
@@ -84,7 +84,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           <div className="flex items-center justify-center lg:hidden grow">
-            <Link to="/">
+            <Link to={user ? "/dashboard" : "/"}>
               <img src="/logo.png" alt="logo" className="w-10 h-10" />
             </Link>
           </div>

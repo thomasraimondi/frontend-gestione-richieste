@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import GoogleIcon from "@mui/icons-material/Google";
-import AppleIcon from "@mui/icons-material/Apple";
+// import Divider from "@mui/material/Divider";
+// import GoogleIcon from "@mui/icons-material/Google";
+// import AppleIcon from "@mui/icons-material/Apple";
 import { useError } from "../contexts/errorContext";
 
 export default function Register() {

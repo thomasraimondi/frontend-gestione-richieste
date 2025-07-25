@@ -31,7 +31,7 @@ export default function Login() {
   return (
     <>
       <HeaderMessage title="Gestione Richieste" />
-      <div className="flex flex-col items-center justify-center p-4 grow">
+      <div className="flex flex-col items-center md:justify-center p-4 grow">
         <div className="flex flex-col gap-5 bg-white p-4 rounded-md w-full sm:w-1/2 lg:w-1/3">
           <div className="flex flex-col">
             <h1 className="text-2xl font-bold">Welcome Back!</h1>

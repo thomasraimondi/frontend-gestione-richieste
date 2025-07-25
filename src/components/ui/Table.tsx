@@ -85,7 +85,7 @@ export default function BasicTable({ rows }: { rows: Row[] }) {
                 <TableCell component="th" scope="row">
                   {row.type}
                 </TableCell>
-                <TableCell align="left">{row.date}</TableCell>
+                <TableCell align="left">{new Date(row.date).toLocaleDateString("it-IT", { timeZone: "Europe/Rome" })}</TableCell>
                 <TableCell align="left" sx={{ display: { xs: "none", md: "table-cell" } }}>
                   {row.description}
                 </TableCell>

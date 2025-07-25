@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Table from "../../components/ui/Table";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
+import { useSearch } from "../../contexts/SearchContext";
+import SearchLastName from "../../components/ui/search/SearchLastName";
+import SearchName from "../../components/ui/search/SearchName";
+import SearchType from "../../components/ui/search/SearchType";
+import SearchDate from "../../components/ui/search/SearchDate";
 
 interface Request {
   id: number;
@@ -18,24 +23,32 @@ interface Request {
 
 export default function DashboardCrew() {
   const [requests, setRequests] = useState<Request[]>([]);
-  const [search, setSearch] = useState("");
-  const [searchType, setSearchType] = useState("");
-  const [searchLastname, setSearchLastname] = useState("");
+  const { search, setSearch, searchLastname, setSearchLastname, searchType, setSearchType, searchDate, setSearchDate } = useSearch();
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL}/requests/crew`).then((res) => {
       setRequests(res.data);
+      setSearchDate("");
+      setSearchType("");
+      setSearchLastname("");
+      setSearch("");
     });
   }, []);
 
   const pendingRequests = requests.filter((request: Request) => request.status === "pending");
   const allRequests = requests;
   const filteredRequests = allRequests.filter(
-    (request: Request) => request.name.toLowerCase().includes(search?.toLowerCase() || "") && request.lastname.toLowerCase().includes(searchLastname?.toLowerCase() || "")
-    // request.type?.toLowerCase().includes(searchType?.toLowerCase() || "")
+    (request: Request) =>
+      request.name.toLowerCase().includes(search?.toLowerCase() || "") &&
+      request.lastname.toLowerCase().includes(searchLastname?.toLowerCase() || "") &&
+      request.type?.toLowerCase().includes(searchType?.toLowerCase() || "") &&
+      request.date?.toLowerCase().includes(searchDate?.toLowerCase() || "")
   );
   const filteredPendingRequests = pendingRequests.filter(
-    (request: Request) => request.name.toLowerCase().includes(search?.toLowerCase() || "") && request.lastname.toLowerCase().includes(searchLastname?.toLowerCase() || "")
-    // request.type?.toLowerCase().includes(searchType?.toLowerCase() || "")
+    (request: Request) =>
+      request.name.toLowerCase().includes(search?.toLowerCase() || "") &&
+      request.lastname.toLowerCase().includes(searchLastname?.toLowerCase() || "") &&
+      request.type?.toLowerCase().includes(searchType?.toLowerCase() || "") &&
+      request.date?.toLowerCase().includes(searchDate?.toLowerCase() || "")
   );
 
   return (
@@ -43,14 +56,15 @@ export default function DashboardCrew() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 w-full">
           <div className="flex flex-col gap-4">
-            <h2 className="text-2xl font-bold">Search</h2>
+            <h2 className="text-2xl font-bold">Cerca</h2>
             <Box className="flex gap-4">
-              <TextField id="outlined-search" label="Cerca Nome" type="search" value={search} onChange={(e) => setSearch(e.target.value)} />
-              <TextField id="outlined-search" label="Cerca Cognome" type="search" value={searchLastname} onChange={(e) => setSearchLastname(e.target.value)} />
-              {/* <TextField id="outlined-search" label="Cerca Tipo" type="search" value={searchType} onChange={(e) => setSearchType(e.target.value)} /> */}
+              <SearchName search={search} setSearch={setSearch} />
+              <SearchLastName searchLastname={searchLastname} setSearchLastname={setSearchLastname} />
+              <SearchType searchType={searchType} setSearchType={setSearchType} />
+              <SearchDate searchDate={searchDate} setSearchDate={setSearchDate} />
             </Box>
             <div className="flex gap-4 justify-between">{pendingRequests.length > 0 && <h2 className="text-2xl font-bold">Richieste In Attesa</h2>}</div>
-            {pendingRequests.length > 0 && <Table rows={filteredPendingRequests} />}
+            {pendingRequests.length > 0 && <Table rows={filteredPendingRequests.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())} />}
           </div>
           <Box className="flex justify-between gap-4">
             <h2 className="text-2xl font-bold">Tutte le mie richieste</h2>
