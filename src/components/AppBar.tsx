@@ -14,6 +14,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import Avatar from "@mui/material/Avatar";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import Diversity2Icon from "@mui/icons-material/Diversity2";
 
 const settings = ["Profile"];
 
@@ -49,7 +50,7 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to={user ? "/dashboard" : "/"} className="hidden lg:block">
-            <img src="/logo.png" alt="logo" className="w-10 h-10" />
+            <Diversity2Icon sx={{ fontSize: "50px" }} />
           </Link>
 
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -85,7 +86,7 @@ function ResponsiveAppBar() {
           </Box>
           <div className="flex items-center justify-center lg:hidden grow">
             <Link to={user ? "/dashboard" : "/"}>
-              <img src="/logo.png" alt="logo" className="w-10 h-10" />
+              <Diversity2Icon />
             </Link>
           </div>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>

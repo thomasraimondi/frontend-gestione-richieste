@@ -15,8 +15,8 @@ export default function Login() {
   });
 
   useEffect(() => {
-    setError({ username: false, password: false, name: false, lastname: false, email: false });
-    setErrorMessage({ username: "", password: "", name: "", lastname: "", email: "" });
+    setError({ username: false, password: false, name: false, lastname: false, email: false, updateProfile: false });
+    setErrorMessage({ username: "", password: "", name: "", lastname: "", email: "", updateProfile: "" });
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

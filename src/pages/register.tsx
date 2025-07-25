@@ -21,8 +21,8 @@ export default function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setError({ password: false, name: false, lastname: false, email: false, username: false });
-    setErrorMessage({ password: "", name: "", lastname: "", email: "", username: "" });
+    setError({ password: false, name: false, lastname: false, email: false, username: false, updateProfile: false });
+    setErrorMessage({ password: "", name: "", lastname: "", email: "", username: "", updateProfile: "" });
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,8 +32,8 @@ export default function Register() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (userData.password !== userData.confirmPassword) {
-      setError({ password: true, name: false, lastname: false, email: false, username: false });
-      setErrorMessage({ password: "Password and confirm password do not match", name: "", lastname: "", email: "", username: "" });
+      setError({ password: true, name: false, lastname: false, email: false, username: false, updateProfile: false });
+      setErrorMessage({ password: "Password and confirm password do not match", name: "", lastname: "", email: "", username: "", updateProfile: "" });
       return;
     }
     axios
@@ -45,24 +45,24 @@ export default function Register() {
       .catch((err) => {
         console.log(err);
         if (err.response.data.error.name) {
-          setError({ name: true, password: false, lastname: false, email: false, username: false });
-          setErrorMessage({ name: err.response.data.error.name, password: "", lastname: "", email: "", username: "" });
+          setError({ name: true, password: false, lastname: false, email: false, username: false, updateProfile: false });
+          setErrorMessage({ name: err.response.data.error.name, password: "", lastname: "", email: "", username: "", updateProfile: "" });
         }
         if (err.response.data.error.lastname) {
-          setError({ lastname: true, password: false, name: false, email: false, username: false });
-          setErrorMessage({ lastname: err.response.data.error.lastname, password: "", name: "", email: "", username: "" });
+          setError({ lastname: true, password: false, name: false, email: false, username: false, updateProfile: false });
+          setErrorMessage({ lastname: err.response.data.error.lastname, password: "", name: "", email: "", username: "", updateProfile: "" });
         }
         if (err.response.data.error.email) {
-          setError({ email: true, password: false, name: false, lastname: false, username: false });
-          setErrorMessage({ email: err.response.data.error.email, password: "", name: "", lastname: "", username: "" });
+          setError({ email: true, password: false, name: false, lastname: false, username: false, updateProfile: false });
+          setErrorMessage({ email: err.response.data.error.email, password: "", name: "", lastname: "", username: "", updateProfile: "" });
         }
         if (err.response.data.error.username) {
-          setError({ username: true, password: false, name: false, lastname: false, email: false });
-          setErrorMessage({ username: err.response.data.error.username, password: "", name: "", lastname: "", email: "" });
+          setError({ username: true, password: false, name: false, lastname: false, email: false, updateProfile: false });
+          setErrorMessage({ username: err.response.data.error.username, password: "", name: "", lastname: "", email: "", updateProfile: "" });
         }
         if (err.response.data.error.password) {
-          setError({ password: true, name: false, lastname: false, email: false, username: false });
-          setErrorMessage({ password: err.response.data.error.password, name: "", lastname: "", email: "", username: "" });
+          setError({ password: true, name: false, lastname: false, email: false, username: false, updateProfile: false });
+          setErrorMessage({ password: err.response.data.error.password, name: "", lastname: "", email: "", username: "", updateProfile: "" });
         }
       });
   };

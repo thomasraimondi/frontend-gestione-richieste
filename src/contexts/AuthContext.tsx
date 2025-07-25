@@ -62,12 +62,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (err: any) {
       console.log(err);
       if (err.response.data.error.username) {
-        setError({ username: true, password: false, name: false, lastname: false, email: false });
-        setErrorMessage({ username: err.response.data.error.username.message, password: "", name: "", lastname: "", email: "" });
+        setError({ username: true, password: false, name: false, lastname: false, email: false, updateProfile: false });
+        setErrorMessage({ username: err.response.data.error.username.message, password: "", name: "", lastname: "", email: "", updateProfile: "" });
       }
       if (err.response.data.error.password) {
-        setError({ username: false, password: true, name: false, lastname: false, email: false });
-        setErrorMessage({ username: "", password: err.response.data.error.password.message, name: "", lastname: "", email: "" });
+        setError({ username: false, password: true, name: false, lastname: false, email: false, updateProfile: false });
+        setErrorMessage({ username: "", password: err.response.data.error.password.message, name: "", lastname: "", email: "", updateProfile: "" });
       }
       return false;
     }
