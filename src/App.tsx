@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Profile from "./pages/Profile";
 import { ErrorProvider } from "./contexts/errorContext";
 import AddRequests from "./pages/Request/AddRequests";
+import { SearchProvider } from "./contexts/SearchContext";
 
 function App() {
   return (
@@ -16,37 +17,39 @@ function App() {
       <BrowserRouter>
         <ErrorProvider>
           <AuthProvider>
-            <Routes>
-              <Route element={<DefaultLayout />} path="/">
-                <Route path="/" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRoute>
-                      <Profile />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/add-requests"
-                  element={
-                    <ProtectedRoute>
-                      <AddRequests />
-                    </ProtectedRoute>
-                  }
-                />
-              </Route>
-            </Routes>
+            <SearchProvider>
+              <Routes>
+                <Route element={<DefaultLayout />} path="/">
+                  <Route path="/" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRoute>
+                        <Profile />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/add-requests"
+                    element={
+                      <ProtectedRoute>
+                        <AddRequests />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Route>
+              </Routes>
+            </SearchProvider>
           </AuthProvider>
         </ErrorProvider>
       </BrowserRouter>
