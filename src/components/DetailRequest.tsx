@@ -32,7 +32,6 @@ export default function DetailRequest({ id, setOpen }: { id: number; setOpen: (o
     if (id) {
       axios.get(`${import.meta.env.VITE_API_URL}/requests/${id}`).then((res) => {
         setRequest(res.data[0]);
-        console.log(res.data[0]);
       });
     }
   }, [id]);
@@ -40,8 +39,7 @@ export default function DetailRequest({ id, setOpen }: { id: number; setOpen: (o
   const handleApprove = () => {
     axios
       .patch(`${import.meta.env.VITE_API_URL}/requests/update`, { id, status: "approved" })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
         setOpen(false);
         window.location.reload();
       })
@@ -52,8 +50,7 @@ export default function DetailRequest({ id, setOpen }: { id: number; setOpen: (o
   const handleReject = () => {
     axios
       .patch(`${import.meta.env.VITE_API_URL}/requests/update`, { id, status: "rejected" })
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
         setOpen(false);
         window.location.reload();
       })
