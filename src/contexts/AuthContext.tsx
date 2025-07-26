@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(true);
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/check-token`);
+      console.log(res.data.user);
       setUser(res.data.user);
     } catch {
       setUser(null);
