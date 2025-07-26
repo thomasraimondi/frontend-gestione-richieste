@@ -13,6 +13,7 @@ interface User {
   email: string;
   username: string;
   role: string;
+  img?: string;
 }
 
 const AuthContext = createContext<{
@@ -54,11 +55,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   // 🔑 Login
-  const login = async (username: string, password: string) => {
+  const login = async (username: string, password: string): Promise<boolean> => {
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/login`, { username, password });
       await checkAuth();
       navigate("/dashboard");
+      return true;
     } catch (err: any) {
       console.log(err);
       if (err.response.data.error.username) {
