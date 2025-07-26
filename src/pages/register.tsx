@@ -140,7 +140,7 @@ export default function Register() {
         </form>
         <div className="flex justify-center items-center gap-2">
           <p className="text-sm text-gray-500">Already have an account?</p>
-          <Link to="/login" className="text-sm text-gray-500 font-bold">
+          <Link to="/" className="text-sm text-gray-500 font-bold">
             Login
           </Link>
         </div>
