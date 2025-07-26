@@ -1,17 +1,26 @@
 import { createContext, useContext, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
-const SearchContext = createContext({
-  search: "",
-  setSearch: (value: string) => {},
-  searchLastname: "",
-  setSearchLastname: (value: string) => {},
-  searchType: "",
-  setSearchType: (value: string) => {},
-  searchDate: "",
-  setSearchDate: (value: string) => {},
-});
+interface SearchContextType {
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>>;
+  searchLastname: string;
+  setSearchLastname: Dispatch<SetStateAction<string>>;
+  searchType: string;
+  setSearchType: Dispatch<SetStateAction<string>>;
+  searchDate: string;
+  setSearchDate: Dispatch<SetStateAction<string>>;
+}
 
-export const useSearch = () => useContext(SearchContext);
+const SearchContext = createContext<SearchContextType | undefined>(undefined);
+
+export const useSearch = () => {
+  const context = useContext(SearchContext);
+  if (context === undefined) {
+    throw new Error("useSearch must be used within a SearchProvider");
+  }
+  return context;
+};
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [search, setSearch] = useState("");

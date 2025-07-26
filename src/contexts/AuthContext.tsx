@@ -31,7 +31,7 @@ const AuthContext = createContext<{
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { error, setError, errorMessage, setErrorMessage } = useError();
+  const { setError, setErrorMessage } = useError();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/check-token`);
       setUser(res.data.user);
-    } catch (err) {
+    } catch {
       setUser(null);
       navigate("/");
     } finally {
@@ -61,15 +61,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await checkAuth();
       navigate("/dashboard");
       return true;
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err);
-      if (err.response.data.error.username) {
+      const axiosError = err as { response?: { data?: { error?: { username?: { message: string }; password?: { message: string } } } } };
+
+      if (axiosError.response?.data?.error?.username) {
         setError({ username: true, password: false, name: false, lastname: false, email: false, updateProfile: false });
-        setErrorMessage({ username: err.response.data.error.username.message, password: "", name: "", lastname: "", email: "", updateProfile: "" });
+        setErrorMessage({ username: axiosError.response.data.error.username.message, password: "", name: "", lastname: "", email: "", updateProfile: "" });
       }
-      if (err.response.data.error.password) {
+      if (axiosError.response?.data?.error?.password) {
         setError({ username: false, password: true, name: false, lastname: false, email: false, updateProfile: false });
-        setErrorMessage({ username: "", password: err.response.data.error.password.message, name: "", lastname: "", email: "", updateProfile: "" });
+        setErrorMessage({ username: "", password: axiosError.response.data.error.password.message, name: "", lastname: "", email: "", updateProfile: "" });
       }
       return false;
     }

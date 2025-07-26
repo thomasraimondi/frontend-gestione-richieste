@@ -1,4 +1,4 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import HeaderMessage from "../../components/ui/HeaderMessage";
 import { useState } from "react";
 import axios from "axios";
@@ -19,7 +19,7 @@ export default function AddRequests() {
   });
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios.post(`${import.meta.env.VITE_API_URL}/requests`, formData).then((res: any) => {
+    axios.post(`${import.meta.env.VITE_API_URL}/requests`, formData).then(() => {
       navigate("/dashboard");
     });
   };

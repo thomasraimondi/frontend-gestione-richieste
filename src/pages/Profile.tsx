@@ -2,7 +2,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { TextField, Button, Divider, Avatar, Alert } from "@mui/material";
 import Modal from "../components/Modal";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import CheckIcon from "@mui/icons-material/Check";
 import { useError } from "../contexts/errorContext";
 
@@ -73,9 +73,11 @@ export default function Profile() {
         setSubmitMessage("Dati aggiornati con successo.");
         setIsSubmitted(true);
       })
-      .catch((err) => {
-        setError({ username: false, password: false, name: false, lastname: false, email: false, updateProfile: true });
-        setErrorMessage({ username: "", password: "", name: "", lastname: "", email: "", updateProfile: "Errore aggiornamento dati" });
+      .catch((err: unknown) => {
+        if (err instanceof AxiosError) {
+          setError({ username: false, password: false, name: false, lastname: false, email: false, updateProfile: true });
+          setErrorMessage({ username: "", password: "", name: "", lastname: "", email: "", updateProfile: "Errore aggiornamento dati" });
+        }
       });
   };
 
