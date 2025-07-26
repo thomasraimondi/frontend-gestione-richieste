@@ -6,13 +6,27 @@ import axios from "axios";
 import CheckIcon from "@mui/icons-material/Check";
 import { useError } from "../contexts/errorContext";
 
+interface UserData {
+  username: string | undefined;
+  name: string | undefined;
+  lastname: string | undefined;
+  email: string | undefined;
+}
+
+interface FormData {
+  username: string | undefined;
+  name: string | undefined;
+  lastname: string | undefined;
+  email: string | undefined;
+}
+
 export default function Profile() {
   const { user } = useAuth();
   const { error, errorMessage, setError, setErrorMessage } = useError();
-  const [userData, setUserData] = useState<any>(undefined);
+  const [userData, setUserData] = useState<UserData | undefined>(undefined);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     username: user?.username,
     name: user?.name,
     lastname: user?.lastname,
@@ -106,7 +120,7 @@ export default function Profile() {
           <div className="w-full md:w-1/2 flex flex-col gap-4 justify-center">
             <div className="flex items-center justify-between">
               <Avatar sx={{ width: 100, height: 100, fontSize: "2rem" }}>
-                {user?.img ? <img src={user?.img} alt="avatar" /> : formData?.name?.charAt(0).toUpperCase() + formData?.lastname?.charAt(0).toUpperCase()}
+                {user?.img ? <img src={user?.img} alt="avatar" /> : formData.name && formData.lastname ? formData.name.charAt(0).toUpperCase() + formData.lastname.charAt(0).toUpperCase() : ""}
               </Avatar>
               {/* <InputFileUpload /> */}
             </div>
