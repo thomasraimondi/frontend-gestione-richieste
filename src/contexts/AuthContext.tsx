@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  return <AuthContext.Provider value={{ user, loading, login, logout, checkAuth, error, errorMessage, setError, setErrorMessage }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, loading, login, logout, checkAuth }}>{children}</AuthContext.Provider>;
 };
 
 // 🔎 Hook per usare il context
