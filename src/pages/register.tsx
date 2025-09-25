@@ -21,7 +21,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setError({ password: false, name: false, lastname: false, email: false, username: false, updateProfile: false });
+    setError({ password: false, name: false, lastname: false, email_format: false, email_exists: false, username_format: false, username_exists: false, updateProfile: false });
     setErrorMessage({ password: "", name: "", lastname: "", email: "", username: "", updateProfile: "" });
   }, []);
 
@@ -32,7 +32,7 @@ export default function Register() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (userData.password !== userData.confirmPassword) {
-      setError({ password: true, name: false, lastname: false, email: false, username: false, updateProfile: false });
+      setError({ password: true, name: false, lastname: false, email_format: false, email_exists: false, username_format: false, username_exists: false, updateProfile: false });
       setErrorMessage({ password: "Password and confirm password do not match", name: "", lastname: "", email: "", username: "", updateProfile: "" });
       return;
     }
@@ -44,24 +44,32 @@ export default function Register() {
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.data.error.name) {
-          setError({ name: true, password: false, lastname: false, email: false, username: false, updateProfile: false });
+        if (err.response.data.error?.name) {
+          setError({ name: true, password: false, lastname: false, email_format: false, email_exists: false, username_format: false, username_exists: false, updateProfile: false });
           setErrorMessage({ name: err.response.data.error.name, password: "", lastname: "", email: "", username: "", updateProfile: "" });
         }
-        if (err.response.data.error.lastname) {
-          setError({ lastname: true, password: false, name: false, email: false, username: false, updateProfile: false });
+        if (err.response.data.error?.lastname) {
+          setError({ lastname: true, password: false, name: false, email_format: false, email_exists: false, username_format: false, username_exists: false, updateProfile: false });
           setErrorMessage({ lastname: err.response.data.error.lastname, password: "", name: "", email: "", username: "", updateProfile: "" });
         }
-        if (err.response.data.error.email) {
-          setError({ email: true, password: false, name: false, lastname: false, username: false, updateProfile: false });
+        if (err.response.data.error?.email) {
+          setError({ email_format: true, email_exists: false, password: false, name: false, lastname: false, username_format: false, username_exists: false, updateProfile: false });
           setErrorMessage({ email: err.response.data.error.email, password: "", name: "", lastname: "", username: "", updateProfile: "" });
         }
-        if (err.response.data.error.username) {
-          setError({ username: true, password: false, name: false, lastname: false, email: false, updateProfile: false });
+        if (err.response.data.message === "Email already exists") {
+          setError({ email_exists: true, password: false, name: false, lastname: false, email_format: false, username_format: false, username_exists: false, updateProfile: false });
+          setErrorMessage({ email: err.response.data.message, password: "", name: "", lastname: "", username: "", updateProfile: "" });
+        }
+        if (err.response.data.error?.username) {
+          setError({ username_format: true, username_exists: false, password: false, name: false, lastname: false, email_format: false, email_exists: false, updateProfile: false });
           setErrorMessage({ username: err.response.data.error.username, password: "", name: "", lastname: "", email: "", updateProfile: "" });
         }
-        if (err.response.data.error.password) {
-          setError({ password: true, name: false, lastname: false, email: false, username: false, updateProfile: false });
+        if (err.response.data.message === "Username already exists") {
+          setError({ username_exists: true, password: false, name: false, lastname: false, email_format: false, email_exists: false, username_format: false, updateProfile: false });
+          setErrorMessage({ username: err.response.data.message, password: "", name: "", lastname: "", email: "", updateProfile: "" });
+        }
+        if (err.response.data.error?.password) {
+          setError({ password: true, name: false, lastname: false, email_format: false, email_exists: false, username_format: false, username_exists: false, updateProfile: false });
           setErrorMessage({ password: err.response.data.error.password, name: "", lastname: "", email: "", username: "", updateProfile: "" });
         }
       });
@@ -91,7 +99,17 @@ export default function Register() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <TextField required id="email" label="Email" variant="outlined" name="email" value={userData.email} onChange={handleChange} error={error.email} helperText={errorMessage.email} />
+            <TextField
+              required
+              id="email"
+              label="Email"
+              variant="outlined"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              error={error.email_format ? error.email_format : error.email_exists}
+              helperText={errorMessage.email}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <TextField
@@ -102,7 +120,7 @@ export default function Register() {
               name="username"
               value={userData.username}
               onChange={handleChange}
-              error={error.username}
+              error={error.username_format ? error.username_format : error.username_exists}
               helperText={errorMessage.username}
             />
           </div>
