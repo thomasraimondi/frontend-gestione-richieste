@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import { ErrorProvider } from "./contexts/errorContext";
 import AddRequests from "./pages/Request/AddRequests";
 import { SearchProvider } from "./contexts/SearchContext";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
                     }
                   />
                 </Route>
+                <Route path="/*" element={<NotFound />} />
               </Routes>
             </SearchProvider>
           </AuthProvider>
