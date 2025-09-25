@@ -129,7 +129,7 @@ export default function Profile() {
             <div className="flex flex-col gap-4">
               <h2 className="text-2xl font-bold">Dati personali</h2>
               <div className="flex flex-col md:flex-row gap-4">
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
                   <div className="flex gap-4">
                     <TextField
                       id="username"
